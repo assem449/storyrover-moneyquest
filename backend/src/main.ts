@@ -29,8 +29,8 @@ async function bootstrap() {
   console.log('  POST /hardware/test-movement - Test robot movement');
   console.log('');
   
-  if (!process.env.GEMINI_API_KEY) {
-    console.log('⚠️  Warning: GEMINI_API_KEY not set. Using mock responses.');
+  if (!process.env.OPENAI_API_KEY) {
+    console.log('⚠️  Warning: OPENAI_API_KEY not set. Using mock responses.');
     console.log('   Set it in the .env file for real AI generation.');
     console.log('');
   }

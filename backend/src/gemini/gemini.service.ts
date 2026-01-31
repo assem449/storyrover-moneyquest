@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import OpenAI from 'openai';
 
 export interface FinancialScenario {
   scenario: string;
@@ -20,23 +20,22 @@ export interface FinancialConsequence {
 }
 
 @Injectable()
-export class GeminiService {
-  private genAI: GoogleGenerativeAI;
-  private model: any;
+export class GeminiService {  // Keep the name for compatibility
+  private openai: OpenAI;
 
   constructor() {
-    const apiKey = process.env.GEMINI_API_KEY;
+    const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {
-      console.warn('⚠️  GEMINI_API_KEY not found. Using mock responses.');
+      console.warn('⚠️  OPENAI_API_KEY not found. Using mock responses.');
       return;
     }
     
-    this.genAI = new GoogleGenerativeAI(apiKey);
-    this.model = this.genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    this.openai = new OpenAI({ apiKey });
+    console.log('✅ OpenAI API initialized');
   }
 
   async generateScenario(age: number, currentBalance: number): Promise<FinancialScenario> {
-    if (!this.model) {
+    if (!this.openai) {
       return this.getMockScenario(currentBalance);
     }
 
@@ -46,7 +45,7 @@ Current Balance: $${currentBalance}
 
 Generate a simple, age-appropriate financial scenario where the child needs to make a decision with their money.
 
-Return ONLY valid JSON in this exact format (no markdown, no backticks):
+Return ONLY valid JSON in this exact format (no markdown, no backticks, no explanations):
 {
   "scenario": "A brief, fun story about a financial situation (2-3 sentences)",
   "currentBalance": ${currentBalance},
@@ -60,13 +59,24 @@ Return ONLY valid JSON in this exact format (no markdown, no backticks):
 Make it engaging, relatable, and appropriate for a ${age}-year-old child.`;
 
     try {
-      const result = await this.model.generateContent(prompt);
-      const response = await result.response;
-      const text = response.text();
-      
-      // Remove markdown code blocks if present
-      const cleanText = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-      const parsed = JSON.parse(cleanText);
+      const completion = await this.openai.chat.completions.create({
+        model: 'gpt-4o-mini',  // Fast and cheap! Can use 'gpt-4o' for better quality
+        messages: [
+          {
+            role: 'system',
+            content: 'You are a financial education expert for children. Always respond with valid JSON only, no markdown formatting.'
+          },
+          {
+            role: 'user',
+            content: prompt
+          }
+        ],
+        temperature: 0.8,  // Creative but consistent
+        response_format: { type: "json_object" }  // Forces JSON output
+      });
+
+      const text = completion.choices[0].message.content;
+      const parsed = JSON.parse(text);
       
       return {
         scenario: parsed.scenario,
@@ -74,7 +84,7 @@ Make it engaging, relatable, and appropriate for a ${age}-year-old child.`;
         options: parsed.options
       };
     } catch (error) {
-      console.error('Error generating scenario:', error);
+      console.error('Error generating scenario:', error.message);
       return this.getMockScenario(currentBalance);
     }
   }
@@ -85,7 +95,7 @@ Make it engaging, relatable, and appropriate for a ${age}-year-old child.`;
     currentBalance: number,
     age: number
   ): Promise<FinancialConsequence> {
-    if (!this.model) {
+    if (!this.openai) {
       return this.getMockConsequence(choice, currentBalance);
     }
 
@@ -104,21 +114,35 @@ For INVEST: Small chance of growth OR small loss (risk/reward)
 Return ONLY valid JSON in this exact format (no markdown, no backticks):
 {
   "result": "What happened as a result of the choice (2-3 sentences, fun story)",
-  "balanceChange": (positive or negative number representing money gained or lost),
-  "newBalance": (calculate: currentBalance + balanceChange),
+  "balanceChange": -10,
+  "newBalance": ${currentBalance - 10},
   "lesson": "One sentence financial lesson the child learned",
-  "emotion": "happy or sad or neutral or excited"
+  "emotion": "happy"
 }
 
+The balanceChange should be a number (positive for gain, negative for loss).
+The emotion should be one of: happy, sad, neutral, excited.
 Make the story engaging and the lesson clear!`;
 
     try {
-      const result = await this.model.generateContent(prompt);
-      const response = await result.response;
-      const text = response.text();
-      
-      const cleanText = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-      const parsed = JSON.parse(cleanText);
+      const completion = await this.openai.chat.completions.create({
+        model: 'gpt-4o-mini',
+        messages: [
+          {
+            role: 'system',
+            content: 'You are a financial education expert for children. Always respond with valid JSON only, no markdown formatting.'
+          },
+          {
+            role: 'user',
+            content: prompt
+          }
+        ],
+        temperature: 0.8,
+        response_format: { type: "json_object" }
+      });
+
+      const text = completion.choices[0].message.content;
+      const parsed = JSON.parse(text);
       
       return {
         result: parsed.result,
@@ -128,7 +152,7 @@ Make the story engaging and the lesson clear!`;
         emotion: parsed.emotion
       };
     } catch (error) {
-      console.error('Error generating consequence:', error);
+      console.error('Error generating consequence:', error.message);
       return this.getMockConsequence(choice, currentBalance);
     }
   }
