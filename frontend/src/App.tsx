@@ -148,7 +148,7 @@ function App() {
                 Money Adventure
               </h1>
               <p className="text-wealthsimple-gold mt-2 text-lg font-semibold">
-                Learn about money by playing! 🎮
+                Learn about money by playing! 
               </p>
             </div>
             <div className="flex items-center gap-4">
