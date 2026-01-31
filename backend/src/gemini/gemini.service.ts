@@ -45,6 +45,8 @@ Current Balance: $${currentBalance}
 
 Generate a simple, age-appropriate financial scenario where the child needs to make a decision with their money.
 
+IMPORTANT: Always write out the word "dollars" — never use the "$" symbol.
+
 Return ONLY valid JSON in this exact format (no markdown, no backticks, no explanations):
 {
   "scenario": "A brief, fun story about a financial situation (2-3 sentences)",
@@ -56,7 +58,8 @@ Return ONLY valid JSON in this exact format (no markdown, no backticks, no expla
   }
 }
 
-Make it engaging, relatable, and appropriate for a ${age}-year-old child.`;
+Make it engaging, relatable, and appropriate for a ${age}-year-old child.
+Never use the "$" symbol anywhere in the response.`;
 
     try {
       const completion = await this.openai.chat.completions.create({
@@ -103,7 +106,9 @@ Make it engaging, relatable, and appropriate for a ${age}-year-old child.`;
 
 The child chose to: ${choice.toUpperCase()}
 Specifically: "${choiceDescription}"
-Current Balance: $${currentBalance}
+Current Balance: ${currentBalance} dollars
+
+IMPORTANT: Always write out the word "dollars" — never use the "$" symbol.
 
 Generate a consequence for this choice. Make it realistic but kid-friendly.
 
@@ -122,7 +127,8 @@ Return ONLY valid JSON in this exact format (no markdown, no backticks):
 
 The balanceChange should be a number (positive for gain, negative for loss).
 The emotion should be one of: happy, sad, neutral, excited.
-Make the story engaging and the lesson clear!`;
+Make the story engaging and the lesson clear!
+Never use the "$" symbol anywhere in the response.`;
 
     try {
       const completion = await this.openai.chat.completions.create({
