@@ -27,6 +27,7 @@ npm run install-all
 Create `.env` file in `/backend` directory:
 ```env
 GEMINI_API_KEY=your_gemini_api_key_here
+OPENAI_API_KEY=your_openai_api_key_here
 RASPBERRY_PI_URL=http://192.168.1.50:5000
 PORT=3001
 ```
