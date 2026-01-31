@@ -9,11 +9,14 @@ import time
 import os
 import requests
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 
 # Configuration
-ELEVENLABS_API_KEY = os.getenv('ELEVENLABS_API_KEY', 'your_key_here')
+ELEVENLABS_API_KEY = os.getenv('ELEVENLABS_API_KEY')
 VOICE_ID = "21m00Tcm4TlvDq8ikWAM"  # Default voice, change as needed
 ARDUINO_PORT = '/dev/ttyUSB0'  # or /dev/ttyACM0
 BAUD_RATE = 9600
@@ -35,7 +38,7 @@ def speak_with_elevenlabs(text, emotion='neutral'):
     """
     Use ElevenLabs API to generate and play speech
     """
-    if not ELEVENLABS_API_KEY or ELEVENLABS_API_KEY == 'your_key_here':
+    if not ELEVENLABS_API_KEY:
         print(f"🔇 Would speak: {text} (emotion: {emotion})")
         print("   Set ELEVENLABS_API_KEY to enable voice")
         return False
