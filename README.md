@@ -1,4 +1,4 @@
-# StoryVerse: Money Quest - Hackathon Project
+# StoryVerse: Money Quest
 
 An AI-powered interactive financial literacy robot for kids using Gemini AI and ElevenLabs.
 
