@@ -143,11 +143,11 @@ function App() {
         <div className="container mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-4xl font-black flex items-center gap-3">
-                <span className="text-5xl">🤖</span>
+              <h1 className="text-4xl font-black flex items-center gap-0">
+                <img src="/robot.png" alt="Robot" className="w-20 h-20 object-contain" />
                 Money Adventure
               </h1>
-              <p className="text-wealthsimple-gold mt-2 text-lg font-semibold">
+              <p className="text-wealthsimple-gold mt-2 text-lg font-semibold ml-6">
                 Learn about money by playing! 
               </p>
             </div>
@@ -181,12 +181,18 @@ function App() {
         {gameState === 'idle' && (
           <div className="max-w-2xl mx-auto text-center">
             <div className="bg-white rounded-3xl p-12 shadow-xl border-4 border-wealthsimple-gold">
-              <div className="text-8xl mb-6">🚀💰</div>
-              <h2 className="text-4xl font-black text-wealthsimple-black mb-4">
+              <div className="flex justify-center mb-2">
+                <img 
+                  src="/robot.png" 
+                  alt="Robot" 
+                  className="w-40 h-40 object-contain" 
+                />
+              </div>
+              <h2 className="text-4xl font-black text-wealthsimple-black mb-2">
                 Ready for a Money Adventure?
               </h2>
               <p className="text-xl text-gray-700 mb-8 font-semibold">
-                Make smart choices and watch your money grow! 🌱
+                Make smart choices and watch your money grow!
               </p>
               <button
                 onClick={startAdventure}
