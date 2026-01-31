@@ -146,30 +146,6 @@ The app uses Wealthsimple's color scheme:
 - Check if Pi is on same network
 - Test Pi endpoint manually with curl
 
-##  Demo Script
-
-1. **Intro**: "Hi judges! We're Team StoryRover. We built an AI-powered financial literacy robot."
-2. **Show UI**: Click "Start Adventure" 
-3. **Read Scenario**: Let AI generate the story
-4. **Make Choice**: Click "Save" or "Invest"
-5. **Watch Robot**: It drives to the colored zone
-6. **Reveal Result**: AI shows the consequence
-7. **Closing**: "This teaches kids that money isn't just numbers—it's choices and consequences!"
-
-## Getting API Keys
-
-### Google Gemini API
-1. Go to https://ai.google.dev/
-2. Click "Get API Key"
-3. Create a new key
-4. Copy to backend `.env`
-
-### ElevenLabs (for hardware partner)
-1. Go to https://elevenlabs.io
-2. Sign up for free account
-3. Get API key from settings
-4. Share with hardware partner for Pi setup
-
 ## Built With
 
 - **Frontend**: React, TypeScript, Vite, TailwindCSS
