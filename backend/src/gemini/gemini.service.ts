@@ -160,27 +160,27 @@ Make the story engaging and the lesson clear!`;
   private getMockScenario(currentBalance: number): FinancialScenario {
     const scenarios = [
       {
-        scenario: "You're at the school fair and you have $10! There's a cool yo-yo for sale, your friend wants to save up for a pizza party, and there's a mini lemonade stand kit you could buy to sell drinks.",
+        scenario: "You're at the school fair and you have 10 dollars! There's a cool yo-yo for sale, your friend wants to save up for a pizza party, and there's a mini lemonade stand kit you could buy to sell drinks.",
         options: {
-          spend: "Buy the awesome light-up yo-yo for $10",
+          spend: "Buy the awesome light-up yo-yo for 10 dollars",
           save: "Save your money for the pizza party next week",
           invest: "Buy the lemonade stand kit to make more money"
         }
       },
       {
-        scenario: "It's your birthday and grandma gave you $15! Your favorite video game just went on sale, you've been wanting to save for new sneakers, and your neighbor will pay you to help with their garden project.",
+        scenario: "It's your birthday and grandma gave you 15 dollars! Your favorite video game just went on sale, you've been wanting to save for new sneakers, and your neighbor will pay you to help with their garden project.",
         options: {
-          spend: "Buy the video game while it's on sale for $15",
+          spend: "Buy the video game while it's on sale for 15 dollars",
           save: "Put it toward your sneaker savings goal",
-          invest: "Use it to buy garden supplies and earn $20 helping your neighbor"
+          invest: "Use it to buy garden supplies and earn 20 dollars helping your neighbor"
         }
       },
       {
-        scenario: "You found $12 doing chores! The ice cream truck is outside, you're saving for a new bike, and there's a car wash fundraiser where you could earn double your money.",
+        scenario: "You found 12 dollars doing chores! The ice cream truck is outside, you're saving for a new bike, and there's a car wash fundraiser where you could earn double your money.",
         options: {
-          spend: "Get ice cream and treats for $12",
+          spend: "Get ice cream and treats for 12 dollars",
           save: "Add it to your bike savings jar",
-          invest: "Use it for supplies for the car wash to earn $24"
+          invest: "Use it for supplies for the car wash to earn 24 dollars"
         }
       }
     ];
