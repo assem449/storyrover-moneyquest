@@ -2,21 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+/* In frontend/src/index.css */
+/* In frontend/src/index.css */
 @layer base {
   body {
     @apply antialiased;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Open Sans', sans-serif;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Fredoka One', cursive;
+    font-family: 'Varela Round', sans-serif;
   }
   
   .font-black {
-    font-family: 'Fredoka One', cursive;
+    font-family: 'Varela Round', sans-serif;
+    font-weight: 400; /* Only has one weight */
   }
 }
-
 @layer utilities {
   .animate-bounce-in {
     animation: bounceIn 0.3s ease-out;
