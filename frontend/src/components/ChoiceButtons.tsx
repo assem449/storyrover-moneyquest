@@ -15,29 +15,29 @@ export const ChoiceButtons: React.FC<ChoiceButtonsProps> = ({ options, onChoice,
   const choices = [
     {
       type: 'spend' as const,
-      label: '🛍️ Spend',
+      label: 'Spend',
       description: options.spend,
       icon: ShoppingCart,
       color: 'bg-red-500 hover:bg-red-600',
-      zone: '🔴 Red Zone',
+      zone: 'Red Zone',
       emoji: '💸'
     },
     {
       type: 'save' as const,
-      label: '🏦 Save',
+      label: 'Save',
       description: options.save,
       icon: Wallet,
       color: 'bg-blue-500 hover:bg-blue-600',
-      zone: '🔵 Blue Zone',
+      zone: 'Blue Zone',
       emoji: '🐷'
     },
     {
       type: 'invest' as const,
-      label: '📈 Invest',
+      label: 'Invest',
       description: options.invest,
       icon: TrendingUp,
       color: 'bg-yellow-500 hover:bg-yellow-600',
-      zone: '🟡 Yellow Zone',
+      zone: 'Yellow Zone',
       emoji: '🌱'
     }
   ];
