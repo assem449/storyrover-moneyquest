@@ -24,6 +24,34 @@ const playSound = (type: 'success' | 'failure' | 'neutral' | 'click') => {
   audio.play().catch(() => {}); // Ignore errors if sound blocked
 };
 
+const testConfetti = () => {
+  // Simple confetti
+  confetti({
+    particleCount: 100,
+    spread: 70,
+    origin: { y: 0.6 }
+  });
+  
+  // Wait then do more!
+  setTimeout(() => {
+    confetti({
+      particleCount: 50,
+      angle: 60,
+      spread: 55,
+      origin: { x: 0 }
+    });
+  }, 200);
+  
+  setTimeout(() => {
+    confetti({
+      particleCount: 50,
+      angle: 120,
+      spread: 55,
+      origin: { x: 1 }
+    });
+  }, 400);
+};
+
 function App() {
   const [gameState, setGameState] = useState<GameState>('idle');
   const [scenario, setScenario] = useState<Scenario | null>(null);
@@ -143,6 +171,13 @@ function App() {
               </p>
             </div>
             <div className="flex items-center gap-4">
+              {/* TEST BUTTON - Remove this after testing! */}
+              <button
+                onClick={testConfetti}
+                className="bg-yellow-400 text-purple-900 px-4 py-2 rounded-lg font-bold"
+              >
+                🎉 Test Confetti
+              </button>
               {hardwareConnected !== null && (
                 <div className={`flex items-center gap-2 px-5 py-3 rounded-full text-lg font-bold ${
                   hardwareConnected ? 'bg-green-500' : 'bg-red-500'
