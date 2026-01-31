@@ -1,7 +1,7 @@
 {
   "name": "storyrover-money-quest",
   "version": "1.0.0",
-  "description": "StoryVerse: Money Quest - Financial Literacy Robot for Kids",
+  "description": "StoryRover: Money Quest - Financial Literacy Robot for Kids",
   "private": true,
   "workspaces": [
     "frontend",
