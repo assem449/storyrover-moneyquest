@@ -33,6 +33,36 @@ except Exception as e:
     ARDUINO_CONNECTED = False
     arduino = None
 
+def move_to_zone(zone):
+    """
+    Send movement commands to Arduino to navigate to the specified zone
+    """
+    if not ARDUINO_CONNECTED:
+        print(f"🤖 Would move to {zone} zone (Arduino not connected)")
+        return
+    
+    # Zone movement commands (customize based on your robot's calibration)
+    movements = {
+        'red': b'<RED>',      # Spend zone (left)
+        'blue': b'<BLUE>',    # Save zone (forward)
+        'yellow': b'<YELLOW>',# Invest zone (right)
+        'center': b'<STOP>' # Return to start
+    }
+    
+    if zone in movements:
+        try:
+            print(f"🤖 Moving to {zone.upper()} zone...")
+            arduino.write(movements[zone])
+            arduino.flush()
+            
+            # Wait for movement to complete (adjust timing as needed)
+            time.sleep(8)
+            
+            print(f"✅ Reached {zone} zone")
+        except Exception as e:
+            print(f"❌ Movement failed: {e}")
+    else:
+        print(f"❌ Unknown zone: {zone}")
 
 def speak_with_elevenlabs(text, emotion='neutral'):
     """
@@ -80,38 +110,6 @@ def speak_with_elevenlabs(text, emotion='neutral'):
     except Exception as e:
         print(f"❌ Speech generation failed: {e}")
         return False
-
-
-def move_to_zone(zone):
-    """
-    Send movement commands to Arduino to navigate to the specified zone
-    """
-    if not ARDUINO_CONNECTED:
-        print(f"🤖 Would move to {zone} zone (Arduino not connected)")
-        return
-    
-    # Zone movement commands (customize based on your robot's calibration)
-    movements = {
-        'red': b'<RED>\n',      # Spend zone (left)
-        'blue': b'<BLUE>\n',    # Save zone (forward)
-        'yellow': b'<YELLOW>\n',# Invest zone (right)
-        'center': b'<CENTER>\n' # Return to start
-    }
-    
-    if zone in movements:
-        try:
-            print(f"🤖 Moving to {zone.upper()} zone...")
-            arduino.write(movements[zone])
-            arduino.flush()
-            
-            # Wait for movement to complete (adjust timing as needed)
-            time.sleep(3)
-            
-            print(f"✅ Reached {zone} zone")
-        except Exception as e:
-            print(f"❌ Movement failed: {e}")
-    else:
-        print(f"❌ Unknown zone: {zone}")
 
 
 @app.route('/health', methods=['GET'])
