@@ -7,7 +7,7 @@ An AI-powered interactive financial literacy robot for kids using Gemini AI and 
 ### Prerequisites
 - Node.js 18+ 
 - npm or yarn
-- Google Gemini API Key
+- Google Gemini API Key/OpenAI API Key
 - ElevenLabs API Key (optional for hardware)
 
 ### Installation
@@ -133,7 +133,7 @@ The app uses Wealthsimple's color scheme:
 
 **Backend won't start:**
 - Check if `.env` file exists in `/backend`
-- Verify GEMINI_API_KEY is set
+- Verify GEMINI_API_KEY/OPENAI_API_KEY is set
 - Make sure port 3001 is available
 
 **Frontend can't connect:**
