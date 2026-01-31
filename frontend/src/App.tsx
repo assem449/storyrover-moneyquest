@@ -101,7 +101,6 @@ function App() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-4xl font-bold flex items-center gap-3">
-                <span className="text-wealthsimple-gold"></span>
                 StoryRover: Money Quest
               </h1>
               <p className="text-gray-300 mt-2">
