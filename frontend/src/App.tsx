@@ -6,8 +6,23 @@ import { ScenarioCard } from './components/ScenarioCard';
 import { ChoiceButtons } from './components/ChoiceButtons';
 import { ConsequenceModal } from './components/ConsequenceModal';
 import { LoadingSpinner } from './components/LoadingSpinner';
+import confetti from 'canvas-confetti';
 
 type GameState = 'idle' | 'playing' | 'loading' | 'consequence';
+
+// Add sound effects!
+const playSound = (type: 'success' | 'failure' | 'neutral' | 'click') => {
+  const sounds = {
+    success: 'https://assets.mixkit.co/active_storage/sfx/2018/2018-preview.mp3',
+    failure: 'https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3',
+    neutral: 'https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3',
+    click: 'https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3'
+  };
+  
+  const audio = new Audio(sounds[type]);
+  audio.volume = 0.3;
+  audio.play().catch(() => {}); // Ignore errors if sound blocked
+};
 
 function App() {
   const [gameState, setGameState] = useState<GameState>('idle');
@@ -32,6 +47,7 @@ function App() {
   }, []);
 
   const startAdventure = async () => {
+    playSound('click');
     setGameState('loading');
     try {
       const response = await adventureAPI.startAdventure(10);
@@ -40,6 +56,7 @@ function App() {
       setRound(response.round);
       setLastChange(undefined);
       setGameState('playing');
+      playSound('success');
     } catch (error) {
       console.error('Failed to start adventure:', error);
       alert('Failed to start adventure. Make sure the backend is running!');
@@ -48,6 +65,7 @@ function App() {
   };
 
   const makeChoice = async (choice: 'spend' | 'save' | 'invest') => {
+    playSound('click');
     setGameState('loading');
     try {
       const response = await adventureAPI.makeChoice(choice);
@@ -58,6 +76,20 @@ function App() {
         setBalance(response.balance);
         setRound(response.round);
         setGameState('consequence');
+        
+        // Play sound based on outcome
+        if (response.consequence.balanceChange > 0) {
+          playSound('success');
+          confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 }
+          });
+        } else if (response.consequence.balanceChange < 0) {
+          playSound('failure');
+        } else {
+          playSound('neutral');
+        }
         
         // Preload next scenario
         if (response.nextScenario) {
@@ -72,12 +104,14 @@ function App() {
   };
 
   const closeConsequence = () => {
+    playSound('click');
     setConsequence(null);
     setGameState('playing');
   };
 
   const resetGame = async () => {
     if (confirm('Are you sure you want to start over?')) {
+      playSound('click');
       setGameState('loading');
       try {
         await adventureAPI.reset();
@@ -94,37 +128,38 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      {/* Header */}
-      <header className="bg-wealthsimple-black text-white shadow-2xl">
-        <div className="container mx-auto px-6 py-6">
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-100 to-yellow-100">
+      {/* Header with fun colors */}
+      <header className="bg-gradient-to-r from-purple-600 via-pink-600 to-yellow-600 text-white shadow-2xl">
+        <div className="container mx-auto px-6 py-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-4xl font-bold flex items-center gap-3">
-                StoryRover: Money Quest
+              <h1 className="text-5xl font-black flex items-center gap-3">
+                <span className="text-6xl">🤖💰</span>
+                Money Adventure!
               </h1>
-              <p className="text-gray-300 mt-2">
-                Learn about money through interactive adventures!
+              <p className="text-yellow-200 mt-3 text-xl font-bold">
+                Learn about money by playing! 🎮✨
               </p>
             </div>
             <div className="flex items-center gap-4">
               {hardwareConnected !== null && (
-                <div className={`flex items-center gap-2 px-4 py-2 rounded-full ${
-                  hardwareConnected ? 'bg-green-600' : 'bg-red-600'
+                <div className={`flex items-center gap-2 px-5 py-3 rounded-full text-lg font-bold ${
+                  hardwareConnected ? 'bg-green-500' : 'bg-red-500'
                 }`}>
-                  {hardwareConnected ? <Wifi size={20} /> : <WifiOff size={20} />}
-                  <span className="text-sm font-medium">
-                    {hardwareConnected ? 'Robot Connected' : 'Robot Offline'}
+                  {hardwareConnected ? <Wifi size={24} /> : <WifiOff size={24} />}
+                  <span>
+                    {hardwareConnected ? '🤖 Robot Ready!' : '🤖 Robot Offline'}
                   </span>
                 </div>
               )}
               {gameState !== 'idle' && (
                 <button
                   onClick={resetGame}
-                  className="flex items-center gap-2 bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg transition-colors"
+                  className="flex items-center gap-2 bg-white text-purple-600 hover:bg-yellow-200 px-5 py-3 rounded-full transition-colors font-bold text-lg shadow-lg"
                 >
-                  <RotateCcw size={20} />
-                  Reset
+                  <RotateCcw size={24} />
+                  Start Over
                 </button>
               )}
             </div>
@@ -135,28 +170,30 @@ function App() {
       {/* Main Content */}
       <main className="container mx-auto px-6 py-12">
         {gameState === 'idle' && (
-          <div className="max-w-2xl mx-auto text-center">
-            <div className="bg-white rounded-3xl p-12 shadow-2xl">
-              <div className="text-8xl mb-6">🚀</div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-4">
-                Ready for an Adventure?
+          <div className="max-w-3xl mx-auto text-center">
+            <div className="bg-white rounded-3xl p-16 shadow-2xl border-8 border-yellow-400">
+              <div className="text-9xl mb-8 animate-bounce">🚀💸</div>
+              <h2 className="text-5xl font-black text-purple-600 mb-6">
+                Ready for a Money Adventure?
               </h2>
-              <p className="text-xl text-gray-600 mb-8">
-                Make smart money choices and watch your robot friend bring your story to life!
+              <p className="text-2xl text-gray-700 mb-10 font-semibold">
+                Make smart choices and watch your money grow! 🌱💰
               </p>
               <button
                 onClick={startAdventure}
-                className="bg-wealthsimple-gold hover:bg-yellow-500 text-wealthsimple-black font-bold text-2xl px-12 py-6 rounded-2xl shadow-xl transform transition-all hover:scale-105 flex items-center gap-3 mx-auto"
+                className="bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 text-white font-black text-3xl px-16 py-8 rounded-full shadow-2xl transform transition-all hover:scale-110 active:scale-95 flex items-center gap-4 mx-auto border-4 border-white"
               >
-                <Play size={32} />
-                Start New Adventure
+                <Play size={40} />
+                START ADVENTURE!
               </button>
             </div>
           </div>
         )}
 
         {gameState === 'loading' && (
-          <LoadingSpinner message="The robot is thinking..." />
+          <div className="bg-white rounded-3xl p-12 shadow-2xl border-8 border-purple-400">
+            <LoadingSpinner message="The robot is thinking... 🤔💭" />
+          </div>
         )}
 
         {(gameState === 'playing' || gameState === 'consequence') && scenario && (
@@ -174,23 +211,26 @@ function App() {
               disabled={gameState === 'consequence'}
             />
 
-            {/* Zone Legend */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">
-                🎯 Robot Zones on the Floor:
+            {/* Zone Legend with emojis */}
+            <div className="bg-white rounded-3xl p-8 shadow-xl border-4 border-yellow-400">
+              <h3 className="text-2xl font-black text-purple-600 mb-6 text-center">
+                🎯 Where Will The Robot Go?
               </h3>
-              <div className="grid grid-cols-3 gap-4">
-                <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 bg-zones-spend rounded"></div>
-                  <span className="font-medium">Red = Spend</span>
+              <div className="grid grid-cols-3 gap-6">
+                <div className="flex flex-col items-center gap-3 p-4 bg-red-100 rounded-2xl">
+                  <div className="text-5xl">🔴</div>
+                  <span className="font-black text-xl">Spend Zone</span>
+                  <span className="text-4xl">💸</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 bg-zones-save rounded"></div>
-                  <span className="font-medium">Blue = Save</span>
+                <div className="flex flex-col items-center gap-3 p-4 bg-blue-100 rounded-2xl">
+                  <div className="text-5xl">🔵</div>
+                  <span className="font-black text-xl">Save Zone</span>
+                  <span className="text-4xl">🐷</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 bg-zones-invest rounded"></div>
-                  <span className="font-medium">Yellow = Invest</span>
+                <div className="flex flex-col items-center gap-3 p-4 bg-yellow-100 rounded-2xl">
+                  <div className="text-5xl">🟡</div>
+                  <span className="font-black text-xl">Invest Zone</span>
+                  <span className="text-4xl">🌱</span>
                 </div>
               </div>
             </div>
@@ -204,10 +244,10 @@ function App() {
       )}
 
       {/* Footer */}
-      <footer className="bg-wealthsimple-black text-white py-6 mt-12">
+      <footer className="bg-gradient-to-r from-purple-600 to-pink-600 text-white py-8 mt-12">
         <div className="container mx-auto px-6 text-center">
-          <p className="text-gray-400">
-            Built with 💛 for Wealthsimple Challenge | Powered by Gemini AI & ElevenLabs
+          <p className="text-yellow-200 text-xl font-bold">
+            🌟 Built with 💛 for Young Money Learners! 🌟
           </p>
         </div>
       </footer>
