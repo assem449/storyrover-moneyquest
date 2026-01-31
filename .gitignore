@@ -1,0 +1,16 @@
+# Ignore environment files
+.env
+
+# Ignore all markdown files
+*.md
+
+# But DO keep README.md
+!README.md
+# Ignore environment files
+.env
+
+# Ignore all markdown files
+*.md
+
+# But DO keep README.md
+!README.md
