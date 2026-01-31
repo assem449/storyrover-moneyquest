@@ -1,4 +1,4 @@
-# StoryVerse: Money Quest
+# StoryRover: Money Quest
 
 An AI-powered interactive financial literacy robot for kids using Gemini AI and ElevenLabs.
 
