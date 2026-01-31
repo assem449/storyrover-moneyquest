@@ -208,7 +208,7 @@ function App() {
       <footer className="bg-wealthsimple-black text-white py-6 mt-12">
         <div className="container mx-auto px-6 text-center">
           <p className="text-gray-400">
-            Built with 💛 for Wealthsimple Hackathon | Powered by Gemini AI & ElevenLabs
+            Built with 💛 for Wealthsimple Challenge | Powered by Gemini AI & ElevenLabs
           </p>
         </div>
       </footer>
