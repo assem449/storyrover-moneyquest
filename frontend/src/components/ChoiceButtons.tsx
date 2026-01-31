@@ -45,7 +45,6 @@ export const ChoiceButtons: React.FC<ChoiceButtonsProps> = ({ options, onChoice,
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       {choices.map((choice) => {
-        const Icon = choice.icon;
         return (
           <button
             key={choice.type}
