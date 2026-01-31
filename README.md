@@ -1,8 +1,8 @@
-# 🚀 StoryVerse: Money Quest - Hackathon Project
+# StoryVerse: Money Quest - Hackathon Project
 
 An AI-powered interactive financial literacy robot for kids using Gemini AI and ElevenLabs.
 
-## 🎯 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Node.js 18+ 
@@ -58,7 +58,7 @@ npm run dev
 - Frontend: http://localhost:5173
 - Backend API: http://localhost:3001
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 storyrover-money-quest/
@@ -79,7 +79,7 @@ storyrover-money-quest/
 └── README.md
 ```
 
-## 🎮 How to Use
+## How to Use
 
 1. **Start Adventure**: Click the "Start New Adventure" button
 2. **Read Scenario**: AI generates a financial scenario for the child
@@ -104,14 +104,14 @@ Example command payload:
 }
 ```
 
-## 🎨 Wealthsimple Branding
+## Wealthsimple Branding
 
 The app uses Wealthsimple's color scheme:
 - Primary: #191919 (Black)
 - Accent: #FFD700 (Gold)
 - Zones: Red (Spend), Blue (Save), Yellow (Invest)
 
-## 🏆 Hackathon Features
+## Hackathon Features
 
 ✅ **Gemini 1.5 Integration** - Real-time scenario generation  
 ✅ **Interactive Dashboard** - Kid-friendly UI  
@@ -129,7 +129,7 @@ The app uses Wealthsimple's color scheme:
 - `GET /adventure/status` - Get current status
 - `POST /hardware/test` - Test hardware connection
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 **Backend won't start:**
 - Check if `.env` file exists in `/backend`
@@ -146,7 +146,7 @@ The app uses Wealthsimple's color scheme:
 - Check if Pi is on same network
 - Test Pi endpoint manually with curl
 
-## 🎯 Demo Script
+##  Demo Script
 
 1. **Intro**: "Hi judges! We're Team StoryRover. We built an AI-powered financial literacy robot."
 2. **Show UI**: Click "Start Adventure" 
@@ -156,7 +156,7 @@ The app uses Wealthsimple's color scheme:
 6. **Reveal Result**: AI shows the consequence
 7. **Closing**: "This teaches kids that money isn't just numbers—it's choices and consequences!"
 
-## 📝 Getting API Keys
+## Getting API Keys
 
 ### Google Gemini API
 1. Go to https://ai.google.dev/
@@ -170,7 +170,7 @@ The app uses Wealthsimple's color scheme:
 3. Get API key from settings
 4. Share with hardware partner for Pi setup
 
-## 🎓 Built With
+## Built With
 
 - **Frontend**: React, TypeScript, Vite, TailwindCSS
 - **Backend**: NestJS, TypeScript
@@ -178,9 +178,7 @@ The app uses Wealthsimple's color scheme:
 - **Voice**: ElevenLabs (on Raspberry Pi)
 - **Hardware**: Raspberry Pi, Arduino, Sumobot
 
-## 👥 Team
+## Team
 
-- **Software Lead**: Assem (You!)
-- **Hardware Lead**: Your Partner
-
-Good luck at the hackathon! 🚀
+- **Software Lead**: Assem 
+- **Hardware Lead**: Aruzhan
