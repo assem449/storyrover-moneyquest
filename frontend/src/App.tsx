@@ -160,14 +160,14 @@ function App() {
               </p>
             </div>
             <div className="flex items-center gap-4">
-              {hardwareConnected !== null && (
+              {hardwareConnected && (
                 <div className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold ${
                   hardwareConnected ? 'bg-green-600' : 'bg-gray-700'
                 }`}>
-                  {hardwareConnected ? <Wifi size={20} /> : <WifiOff size={20} />}
-                  <span>
+                  {/* {hardwareConnected ? <Wifi size={20} /> : <WifiOff size={20} />} */}
+                  {/* <span>
                     {hardwareConnected ? 'Robot Ready' : 'Robot Offline'}
-                  </span>
+                  </span> */}
                 </div>
               )}
               {gameState !== 'idle' && (

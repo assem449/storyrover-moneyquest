@@ -26,47 +26,46 @@ export const ConsequenceModal: React.FC<ConsequenceModalProps> = ({ consequence,
  return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       {/* Changed to max-w-sm (approx 384px) for a much smaller footprint */}
-      <div className={`bg-white rounded-2xl max-w-sm w-full shadow-2xl border-2 ${config.border}`}>
+      <div className={`bg-white rounded-3xl max-w-2xl w-full shadow-2xl border-4 ${config.border}`}>
         {/* Tightened padding to p-4 */}
-        <div className={`${config.bg} p-4 rounded-t-2xl relative border-b-2 ${config.border}`}>
+        <div className={`${config.bg} p-8 rounded-t-3xl relative border-b-4 ${config.border}`}>
           <button
             onClick={onClose}
-            className="absolute top-2 right-2 text-gray-500 hover:text-gray-900 bg-white rounded-full p-1 shadow-sm"
+            className="absolute top-4 right-4 text-gray-700 hover:text-gray-900 bg-white rounded-full p-2 shadow-lg"
           >
-            <X size={18} />
+            <X size={24} />
           </button>
           
-          <div className="flex items-center gap-3">
-            {/* Switched to side-by-side layout to save vertical space */}
-            <div className="text-4xl">{config.icon}</div>
-            <h2 className="text-xl font-black text-gray-900">
+          <div className="flex flex-col items-center text-center">
+            <div className="text-8xl mb-4">{config.icon}</div>
+            <h2 className="text-4xl font-black text-gray-900">
               {config.title}
             </h2>
           </div>
         </div>
         
-        <div className="p-4 space-y-3">
-          <div className="bg-gray-50 p-3 rounded-xl border border-gray-200">
-            <h3 className="text-sm font-black text-gray-500 uppercase tracking-wider mb-1">
+        <div className="p-8">
+          <div className="mb-6 bg-gray-50 p-6 rounded-2xl border-2 border-gray-200">
+            <h3 className="text-xl font-black text-wealthsimple-black mb-3">
               📖 What Happened:
             </h3>
-            <p className="text-gray-800 text-sm leading-snug">
+            <p className="text-gray-800 text-lg leading-relaxed">
               {consequence.result}
             </p>
           </div>
           
-          <div className="bg-wealthsimple-gold bg-opacity-20 p-3 rounded-xl border border-yellow-200">
-            <h3 className="text-sm font-black text-gray-700 uppercase tracking-wider mb-1">
+          <div className="bg-wealthsimple-gold bg-opacity-30 p-6 rounded-2xl mb-6 border-2 border-wealthsimple-gold">
+            <h3 className="text-xl font-black text-wealthsimple-black mb-3">
               💡 Money Lesson:
             </h3>
-            <p className="text-gray-900 text-sm font-bold">
+            <p className="text-gray-900 text-lg font-semibold">
               {consequence.lesson}
             </p>
           </div>
           
           <button
             onClick={onClose}
-            className="w-full bg-wealthsimple-black hover:bg-gray-800 text-wealthsimple-gold py-2 rounded-lg font-black text-lg transition-colors"
+            className="w-full bg-wealthsimple-black hover:bg-gray-800 text-wealthsimple-gold py-4 rounded-xl font-black text-2xl transition-colors shadow-lg"
           >
             NEXT ADVENTURE! 🚀
           </button>
