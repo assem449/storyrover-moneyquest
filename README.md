@@ -122,7 +122,7 @@ Example command payload:
 - **Backend**: NestJS, TypeScript
 - **AI**: Google Gemini 1.5
 - **Voice**: ElevenLabs (on Raspberry Pi)
-- **Hardware**: Raspberry Pi, Arduino, Sumobot
+- **Hardware**: Raspberry Pi, Arduino, 3D Printed chassis
 
 ## Team
 
