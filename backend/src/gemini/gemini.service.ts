@@ -43,7 +43,7 @@ export class GeminiService {  // Keep the name for compatibility
 
 Current Balance: $${currentBalance}
 
-Generate a simple, age-appropriate financial scenario where the child needs to make a decision with their money, written as a short spoken story that lasts about 10–15 seconds when read out loud (around 25–40 words).
+Generate a simple, age-appropriate financial scenario where the child needs to make a decision with their money, written as a short spoken story that lasts exactly 15 seconds when read out loud (around 25–40 words).
 
 IMPORTANT: Always write out the word "dollars" — never use the "$" symbol.
 
@@ -110,7 +110,7 @@ Current Balance: ${currentBalance} dollars
 
 IMPORTANT: Always write out the word "dollars" — never use the "$" symbol.
 
-Generate a consequence for this choice. Make it realistic but kid-friendly, written as a short spoken story that lasts about 10–15 seconds when read out loud (around 25–40 words).
+Generate a consequence for this choice. Make it realistic but kid-friendly, written as a short spoken story that lasts exactly 15 seconds when read out loud (around 25–40 words).
 
 For SPEND: Money decreases (immediate gratification)
 For SAVE: Money stays same, progress toward goal (delayed gratification)  
