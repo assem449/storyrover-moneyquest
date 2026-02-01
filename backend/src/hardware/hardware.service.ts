@@ -12,7 +12,7 @@ export class HardwareService {
   private raspberryPiUrl: string;
 
   constructor() {
-    this.raspberryPiUrl = process.env.RASPBERRY_PI_URL || 'http://192.168.1.50:5000';
+    this.raspberryPiUrl = process.env.RASPBERRY_PI_URL || 'http://192.168.137.249:5000';
   }
 
   async sendCommand(command: HardwareCommand): Promise<boolean> {
