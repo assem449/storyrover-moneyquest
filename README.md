@@ -89,7 +89,7 @@ storyrover-money-quest/
 5. **See Consequence**: AI reveals what happened based on the choice
 6. **Continue Learning**: Keep making decisions and learning!
 
-## 🔧 Hardware Integration
+## Hardware Integration
 
 The backend automatically sends commands to the Raspberry Pi at the URL configured in `.env`.
 
@@ -105,21 +105,6 @@ Example command payload:
 }
 ```
 
-## Wealthsimple Branding
-
-The app uses Wealthsimple's color scheme:
-- Primary: #191919 (Black)
-- Accent: #FFD700 (Gold)
-- Zones: Red (Spend), Blue (Save), Yellow (Invest)
-
-## Hackathon Features
-
-✅ **Gemini 1.5 Integration** - Real-time scenario generation  
-✅ **Interactive Dashboard** - Kid-friendly UI  
-✅ **Financial Education** - Age-appropriate money lessons  
-✅ **Hardware Ready** - Connects to Raspberry Pi robot  
-✅ **ElevenLabs Ready** - Voice synthesis integration on Pi  
-✅ **Wealthsimple Theme** - Professional branding  
 
 ## 📊 API Endpoints
 
@@ -130,22 +115,6 @@ The app uses Wealthsimple's color scheme:
 - `GET /adventure/status` - Get current status
 - `POST /hardware/test` - Test hardware connection
 
-## Troubleshooting
-
-**Backend won't start:**
-- Check if `.env` file exists in `/backend`
-- Verify GEMINI_API_KEY/OPENAI_API_KEY is set
-- Make sure port 3001 is available
-
-**Frontend can't connect:**
-- Check if backend is running
-- Verify VITE_API_URL in `/frontend/.env`
-- Check browser console for errors
-
-**Hardware not responding:**
-- Verify Raspberry Pi IP address in backend `.env`
-- Check if Pi is on same network
-- Test Pi endpoint manually with curl
 
 ## Built With
 
