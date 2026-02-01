@@ -56,7 +56,7 @@ def move_to_zone(zone):
             arduino.flush()
             
             # Wait for movement to complete (adjust timing as needed)
-            time.sleep(8)
+            time.sleep(15.5)
             
             print(f"✅ Reached {zone} zone")
         except Exception as e:
