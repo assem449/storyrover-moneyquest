@@ -93,17 +93,17 @@ export class AdventureService {
     timestamp: new Date()
   });
   
-  // After consequence is generated, speak it
-    await this.elevenLabsService.speak(
-    consequence.result,
-    consequence.emotion
-  );
-  // 3. THIS is your primary command. It moves the robot and tells the story.
-  await this.hardwareService.sendCommand({
-    text: consequence.result, // Gemini's story
-    zone,                    // The physical color zone
-    emotion: consequence.emotion
-  });
+  Promise.all([
+    this.hardwareService.sendCommand({
+      text: consequence.result,
+      zone,
+      emotion: consequence.emotion
+    }),
+    this.elevenLabsService.speak(
+      consequence.result,
+      consequence.emotion
+    )
+  ]);
 
   // 4. Generate next scenario
   const nextScenario = await this.geminiService.generateScenario(
