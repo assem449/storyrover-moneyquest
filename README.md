@@ -14,7 +14,7 @@ An AI-powered interactive financial literacy robot for kids.
 
 1. **Clone the repository**
 ```bash
-[git clone https://github.com/assem449/storyrover-moneyquest](https://github.com/assem449/storyrover-moneyquest.git)
+git clone https://github.com/assem449/storyrover-moneyquest.git
 ```
 
 2. **Install dependencies**
