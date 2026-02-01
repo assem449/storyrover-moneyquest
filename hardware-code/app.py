@@ -104,13 +104,12 @@ def handle_command():
         print(f"   Emotion: {emotion}")
         print("="*50)
         
-        # Execute the command
-        # 1. Speak the text
-        speak_with_elevenlabs(text, emotion)
-        
-        # 2. Move to the zone
-        move_to_zone(zone)
-        
+        # Move robot in background thread
+        import threading
+        thread = threading.Thread(target=move_to_zone, args=(zone,))
+        thread.start()
+
+        # Respond immediately, don't wait for movement
         return jsonify({
             "status": "success",
             "message": f"Executed command for {zone} zone"
@@ -122,8 +121,7 @@ def handle_command():
             "status": "error",
             "message": str(e)
         }), 500
-
-
+    
 @app.route('/test-movement', methods=['POST'])
 def test_movement():
     """
