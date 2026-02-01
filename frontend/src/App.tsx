@@ -64,7 +64,13 @@ function App() {
   };
 
   const makeChoice = async (choice: 'spend' | 'save' | 'invest') => {
+    // 1. ADD THIS LINE AT THE VERY TOP
+    // If the game is already loading or the robot is moving, ignore the click!
+    if (gameState === 'loading') return; 
+
     playSound('click');
+  
+    // 2. THIS LINE IS ALREADY THERE, but ensure it happens BEFORE the 'try'
     setGameState('loading');
     try {
       const response = await adventureAPI.makeChoice(choice);

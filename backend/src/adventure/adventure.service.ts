@@ -63,70 +63,68 @@ export class AdventureService {
   }
 
   async processChoice(choice: 'spend' | 'save' | 'invest') {
-    if (!this.state.currentScenario) {
-      throw new Error('No active scenario. Start a new adventure first.');
-    }
-
-    console.log(`💰 Processing choice: ${choice}`);
-
-    const choiceDescription = this.state.currentScenario.options[choice];
-    
-    // Send robot to the chosen zone
-    const zone = this.hardwareService.getZoneFromChoice(choice);
-    await this.hardwareService.sendCommand({
-      text: `Moving to ${choice} zone...`,
-      zone,
-      emotion: 'neutral'
-    });
-
-    // Generate consequence using AI
-    const consequence = await this.geminiService.generateConsequence(
-      choice,
-      choiceDescription,
-      this.state.balance,
-      this.state.age
-    );
-
-    // Update state
-    this.state.balance = consequence.newBalance;
-    this.state.lastConsequence = consequence;
-    this.state.history.push({
-      choice: choiceDescription,
-      balanceChange: consequence.balanceChange,
-      timestamp: new Date()
-    });
-
-    // Speak the result
-    await this.hardwareService.sendCommand({
-      text: consequence.result,
-      zone,
-      emotion: consequence.emotion
-    });
-
-    // Generate next scenario for continuous play
-    const nextScenario = await this.geminiService.generateScenario(
-      this.state.age,
-      this.state.balance
-    );
-    this.state.currentScenario = nextScenario;
-    this.state.round += 1;
-
-    // Return to center
-    await this.hardwareService.sendCommand({
-      text: "Ready for your next decision!",
-      zone: 'center',
-      emotion: 'neutral'
-    });
-
-    return {
-      success: true,
-      consequence,
-      nextScenario,
-      balance: this.state.balance,
-      round: this.state.round,
-      history: this.state.history
-    };
+  if (!this.state.currentScenario) {
+    throw new Error('No active scenario. Start a new adventure first.');
   }
+
+  console.log(`💰 Processing choice: ${choice}`);
+  const choiceDescription = this.state.currentScenario.options[choice];
+  
+  // 1. DELETE the first "Moving to zone..." command here. 
+  // It causes the first unnecessary movement.
+  const zone = this.hardwareService.getZoneFromChoice(choice);
+
+  // 2. Generate consequence using AI
+  const consequence = await this.geminiService.generateConsequence(
+    choice,
+    choiceDescription,
+    this.state.balance,
+    this.state.age
+  );
+
+  // Update state
+  this.state.balance = consequence.newBalance;
+  this.state.lastConsequence = consequence;
+  this.state.history.push({
+    choice: choiceDescription,
+    balanceChange: consequence.balanceChange,
+    timestamp: new Date()
+  });
+
+  // 3. THIS is your primary command. It moves the robot and tells the story.
+  await this.hardwareService.sendCommand({
+    text: consequence.result, // Gemini's story
+    zone,                    // The physical color zone
+    emotion: consequence.emotion
+  });
+
+  // 4. Generate next scenario
+  const nextScenario = await this.geminiService.generateScenario(
+    this.state.age,
+    this.state.balance
+  );
+  this.state.currentScenario = nextScenario;
+  this.state.round += 1;
+
+  // 5. OPTIONAL: Remove or delay the "Return to center" command.
+  // If you keep this, the robot will move to the zone, talk, and then 
+  // immediately move back before the user can even read the screen.
+  /* await this.hardwareService.sendCommand({
+    text: "Ready for your next decision!",
+    zone: 'center',
+    emotion: 'neutral'
+  });
+  */
+
+  return {
+    success: true,
+    consequence,
+    nextScenario,
+    balance: this.state.balance,
+    round: this.state.round,
+    history: this.state.history
+  };
+}
 
   getCurrentStatus() {
     return {
