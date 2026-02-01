@@ -63,7 +63,12 @@ export class ElevenLabsService {
       if (platform === 'darwin') {
         execSync(`afplay ${audioPath}`);       // Mac
       } else if (platform === 'win32') {
-        execSync(`start ${audioPath}`);        // Windows
+          const psCommand = `Add-Type -AssemblyName presentationCore; ` +
+                            `$player = New-Object system.windows.media.mediaplayer; ` +
+                            `$player.open('${audioPath}'); ` +
+                            `$player.Play(); ` +
+                            `Start-Sleep -Seconds 10;`; // Wait for it to finish
+          execSync(`powershell -Command "${psCommand}"`);        // Windows
       } else {
         execSync(`aplay ${audioPath}`);        // Linux
       }
