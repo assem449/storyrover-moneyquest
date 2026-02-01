@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Play, RotateCcw, Wifi, WifiOff } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { adventureAPI, hardwareAPI, Scenario, Consequence } from './services/api';
@@ -31,6 +31,7 @@ function App() {
   const [round, setRound] = useState(0);
   const [lastChange, setLastChange] = useState<number | undefined>(undefined);
   const [hardwareConnected, setHardwareConnected] = useState<boolean | null>(null);
+  const isProcessingRef = useRef(false);
 
   const checkHardwareConnection = async () => {
     try {
@@ -46,6 +47,9 @@ function App() {
   }, []);
 
   const startAdventure = async () => {
+    if (isProcessingRef.current) return;
+    isProcessingRef.current = true;
+
     playSound('click');
     setGameState('loading');
     try {
@@ -60,22 +64,27 @@ function App() {
       console.error('Failed to start adventure:', error);
       alert('Failed to start adventure. Make sure the backend is running!');
       setGameState('idle');
+    } finally {
+      isProcessingRef.current = false;
     }
   };
 
   const makeChoice = async (choice: 'spend' | 'save' | 'invest') => {
+    if (isProcessingRef.current) return;
+    isProcessingRef.current = true;
+
     playSound('click');
     setGameState('loading');
     try {
       const response = await adventureAPI.makeChoice(choice);
-      
+
       if (response.consequence) {
         setConsequence(response.consequence);
         setLastChange(response.consequence.balanceChange);
         setBalance(response.balance);
         setRound(response.round);
         setGameState('consequence');
-        
+
         if (response.consequence.balanceChange > 0) {
           playSound('success');
           confetti({
@@ -84,7 +93,7 @@ function App() {
             origin: { y: 0.6 },
             colors: ['#FFD700', '#FFA500', '#FF6347', '#32CD32']
           });
-          
+
           if (response.consequence.balanceChange >= 5) {
             setTimeout(() => {
               confetti({
@@ -100,7 +109,7 @@ function App() {
         } else {
           playSound('neutral');
         }
-        
+
         if (response.nextScenario) {
           setScenario(response.nextScenario);
         }
@@ -109,6 +118,8 @@ function App() {
       console.error('Failed to make choice:', error);
       alert('Failed to process choice. Please try again!');
       setGameState('playing');
+    } finally {
+      isProcessingRef.current = false;
     }
   };
 
