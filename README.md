@@ -37,6 +37,11 @@ Create `.env` file in `/frontend` directory:
 VITE_API_URL=http://localhost:3001
 ```
 
+Create `.env` file in `/hardware-code` directory:
+```env
+ELEVENLABS_API_KEY='your_actual_elevenlabs_api_key_here'
+```
+
 4. **Start Development Servers**
 
 Option A - Start both frontend and backend together:
