@@ -12,9 +12,9 @@ An AI-powered interactive financial literacy robot for kids.
 
 ### Installation
 
-1. **Extract the zip file**
+1. **Clone the repository**
 ```bash
-cd storyrover-money-quest
+git clone https://github.com/assem449/storyrover-moneyquest
 ```
 
 2. **Install dependencies**
