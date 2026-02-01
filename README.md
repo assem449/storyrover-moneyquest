@@ -106,7 +106,7 @@ Example command payload:
 ```
 
 
-## 📊 API Endpoints
+## API Endpoints
 
 ### Backend (http://localhost:3001)
 
