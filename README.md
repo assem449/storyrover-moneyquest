@@ -8,7 +8,7 @@ An AI-powered interactive financial literacy robot for kids.
 - Node.js 18+ 
 - npm or yarn
 - Google Gemini API Key/OpenAI API Key
-- ElevenLabs API Key (optional for hardware)
+- ElevenLabs API Key
 
 ### Installation
 
@@ -59,26 +59,6 @@ npm run dev
 - Frontend: http://localhost:5173
 - Backend API: http://localhost:3001
 
-## Project Structure
-
-```
-storyrover-money-quest/
-├── frontend/          # React + Vite application
-│   ├── src/
-│   │   ├── components/  # UI components
-│   │   ├── services/    # API services
-│   │   ├── App.tsx      # Main app component
-│   │   └── main.tsx     # Entry point
-│   └── package.json
-├── backend/           # NestJS application
-│   ├── src/
-│   │   ├── adventure/   # Adventure module
-│   │   ├── gemini/      # Gemini AI service
-│   │   ├── hardware/    # Hardware communication
-│   │   └── main.ts      # Entry point
-│   └── package.json
-└── README.md
-```
 
 ## How to Use
 
@@ -104,7 +84,6 @@ Example command payload:
   "emotion": "happy"
 }
 ```
-
 
 ## API Endpoints
 
