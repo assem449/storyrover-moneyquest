@@ -104,8 +104,8 @@ Example command payload:
 
 - **Frontend**: React, TypeScript, Vite, TailwindCSS
 - **Backend**: NestJS, TypeScript
-- **AI**: Google Gemini 1.5
-- **Voice**: ElevenLabs (on Raspberry Pi)
+- **AI**: OpenAI
+- **Voice**: ElevenLabs
 - **Hardware**: Raspberry Pi, Arduino, 3D Printed chassis
 
 ## Team
