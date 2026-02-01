@@ -7,7 +7,7 @@ import { execSync } from 'child_process';
 @Injectable()
 export class ElevenLabsService {
   private client: ElevenLabsClient | null = null;
-  private voiceId = '21m00Tcm4TlvDq8ikWAM';
+  private voiceId = 'cgSgspJ2msm6clMCkdW9';
 
   constructor() {
     const apiKey = process.env.ELEVENLABS_API_KEY;

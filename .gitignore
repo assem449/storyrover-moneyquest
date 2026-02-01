@@ -64,3 +64,6 @@ playwright-report/
 *.md
 # Except README
 !README.md
+
+
+*.mp3

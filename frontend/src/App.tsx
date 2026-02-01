@@ -64,13 +64,11 @@ function App() {
   };
 
   const makeChoice = async (choice: 'spend' | 'save' | 'invest') => {
-    // 1. ADD THIS LINE AT THE VERY TOP
     // If the game is already loading or the robot is moving, ignore the click!
     if (gameState === 'loading') return; 
 
     playSound('click');
   
-    // 2. THIS LINE IS ALREADY THERE, but ensure it happens BEFORE the 'try'
     setGameState('loading');
     try {
       const response = await adventureAPI.makeChoice(choice);
@@ -82,29 +80,33 @@ function App() {
         setRound(response.round);
         setGameState('consequence');
         
-        if (response.consequence.balanceChange > 0) {
+        // Win or Save - Confetti!
+        if (response.consequence.balanceChange >= 0) {
           playSound('success');
           confetti({
-            particleCount: 100,
-            spread: 70,
-            origin: { y: 0.6 },
-            colors: ['#FFD700', '#FFA500', '#FF6347', '#32CD32']
+            particleCount: 150,
+            spread: 90,
+            origin: { y: 0.5 },
+            colors: ['#FFD700', '#FFA500', '#FF6347', '#32CD32', '#3B82F6']
           });
-          
-          if (response.consequence.balanceChange >= 5) {
-            setTimeout(() => {
-              confetti({
-                particleCount: 150,
-                spread: 100,
-                origin: { y: 0.6 },
-                colors: ['#FFD700', '#FF69B4', '#00CED1']
-              });
-            }, 200);
-          }
-        } else if (response.consequence.balanceChange < 0) {
+
+          setTimeout(() => {
+            confetti({
+              particleCount: 100,
+              spread: 120,
+              origin: { y: 0.4 },
+              colors: ['#FFD700', '#FF69B4', '#00CED1', '#9B59B6']
+            });
+          }, 300);
+        }
+
+        // Lose money - Screen Shake!
+        if (response.consequence.balanceChange < 0) {
           playSound('failure');
-        } else {
-          playSound('neutral');
+          document.querySelector('.min-h-screen')?.classList.add('animate-shake');
+          setTimeout(() => {
+            document.querySelector('.min-h-screen')?.classList.remove('animate-shake');
+          }, 500);
         }
         
         if (response.nextScenario) {
