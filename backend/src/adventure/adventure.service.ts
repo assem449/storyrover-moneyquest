@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { GeminiService, FinancialScenario, FinancialConsequence } from '../gemini/gemini.service';
+import { ElevenLabsService } from '../elevenlabs/elevenlabs.service';
 import { HardwareService } from '../hardware/hardware.service';
 
 interface AdventureState {
@@ -29,6 +30,7 @@ export class AdventureService {
   constructor(
     private readonly geminiService: GeminiService,
     private readonly hardwareService: HardwareService,
+    private readonly elevenLabsService: ElevenLabsService,
   ) {}
 
   async startNewAdventure(age: number) {
@@ -90,7 +92,12 @@ export class AdventureService {
     balanceChange: consequence.balanceChange,
     timestamp: new Date()
   });
-
+  
+  // After consequence is generated, speak it
+    await this.elevenLabsService.speak(
+    consequence.result,
+    consequence.emotion
+  );
   // 3. THIS is your primary command. It moves the robot and tells the story.
   await this.hardwareService.sendCommand({
     text: consequence.result, // Gemini's story

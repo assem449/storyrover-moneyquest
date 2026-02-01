@@ -64,52 +64,6 @@ def move_to_zone(zone):
     else:
         print(f"❌ Unknown zone: {zone}")
 
-def speak_with_elevenlabs(text, emotion='neutral'):
-    """
-    Use ElevenLabs API to generate and play speech
-    """
-    if not ELEVENLABS_API_KEY:
-        print(f"🔇 Would speak: {text} (emotion: {emotion})")
-        print("   Set ELEVENLABS_API_KEY to enable voice")
-        return False
-    
-    try:
-        url = f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE_ID}"
-        headers = {
-            "Accept": "audio/mpeg",
-            "Content-Type": "application/json",
-            "xi-api-key": ELEVENLABS_API_KEY
-        }
-        
-        data = {
-            "text": text,
-            "model_id": "eleven_monolingual_v1",
-            "voice_settings": {
-                "stability": 0.5,
-                "similarity_boost": 0.5
-            }
-        }
-        
-        print(f"🎤 Generating speech: {text[:50]}...")
-        response = requests.post(url, json=data, headers=headers)
-        
-        if response.status_code == 200:
-            audio_path = "/tmp/speech.mp3"
-            with open(audio_path, 'wb') as f:
-                f.write(response.content)
-            
-            # Play the audio (requires mpg123 or similar)
-            os.system(f'mpg123 -q {audio_path}')
-            print("✅ Speech played")
-            return True
-        else:
-            print(f"❌ ElevenLabs error: {response.status_code}")
-            print(f"   Response: {response.text}")
-            return False
-            
-    except Exception as e:
-        print(f"❌ Speech generation failed: {e}")
-        return False
 
 
 @app.route('/health', methods=['GET'])
